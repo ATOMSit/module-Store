@@ -1,0 +1,25 @@
+{
+    "name": "atomsit/store",
+    "description": "",
+    "authors": [
+        {
+            "name": "ATOMSit",
+            "email": "contact@atomsit.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Store\\Providers\\StoreServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Store\\": ""
+        }
+    }
+}
