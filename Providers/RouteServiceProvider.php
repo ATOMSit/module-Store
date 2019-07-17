@@ -4,6 +4,7 @@ namespace Modules\Store\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -35,21 +36,9 @@ class RouteServiceProvider extends ServiceProvider
     {
         $this->mapApiRoutes();
 
-        $this->mapWebRoutes();
-    }
+        $this->mapAdminRoutes();
 
-    /**
-     * Define the "web" routes for the application.
-     *
-     * These routes all receive session state, CSRF protection, etc.
-     *
-     * @return void
-     */
-    protected function mapWebRoutes()
-    {
-        Route::middleware('web')
-            ->namespace($this->moduleNamespace)
-            ->group(__DIR__ . '/../Routes/web.php');
+        $this->mapWebRoutes();
     }
 
     /**
@@ -62,8 +51,40 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapApiRoutes()
     {
         Route::prefix('api')
+            ->name('store.api.')
             ->middleware('api')
             ->namespace($this->moduleNamespace)
             ->group(__DIR__ . '/../Routes/api.php');
+    }
+
+    /**
+     * Define the "web" routes for the application.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     *
+     * @return void
+     */
+    protected function mapWebRoutes()
+    {
+        Route::middleware('web')
+            ->name('store.web.')
+            ->namespace($this->moduleNamespace)
+            ->group(__DIR__ . '/../Routes/web.php');
+    }
+
+    /**
+     * Define the "admin" routes for the application.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     *
+     * @return void
+     */
+    protected function mapAdminRoutes()
+    {
+        Route::middleware('admin', 'localize')
+            ->prefix(LaravelLocalization::setLocale() . '/admin/page/')
+            ->name('store.admin.')
+            ->namespace($this->moduleNamespace)
+            ->group(__DIR__ . '/../Routes/admin.php');
     }
 }
