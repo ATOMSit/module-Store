@@ -6,7 +6,7 @@ use Greabock\Tentacles\EloquentTentacle;
 use Hyn\Tenancy\Traits\UsesTenantConnection;
 use Illuminate\Database\Eloquent\Model;
 
-class Address extends Model
+class Store extends Model
 {
     use UsesTenantConnection, EloquentTentacle;
 
@@ -15,7 +15,7 @@ class Address extends Model
      *
      * @var string
      */
-    protected $table = 'store__addresses';
+    protected $table = 'store__stores';
 
     /**
      * The attributes that are mass assignable.
@@ -23,7 +23,7 @@ class Address extends Model
      * @var array
      */
     protected $fillable = [
-        'country_code', 'street', 'state', 'city', 'postal_code', 'latitude', 'longitude'
+        'name', 'domain', 'description', 'web_site'
     ];
 
     /**
@@ -60,18 +60,16 @@ class Address extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'country_code' => 'string',
-        'street' => 'string',
-        'state' => 'string',
-        'city' => 'boolean',
-        'postal_code' => 'boolean',
-
+        'name' => 'string',
+        'domain' => 'string',
+        'description' => 'string',
+        'web_site' => 'string',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
 
-    public function store()
+    public function address()
     {
-        return $this->hasOne(Store::class);
+        return $this->belongsTo(Address::class);
     }
 }

@@ -82,7 +82,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapAdminRoutes()
     {
         Route::middleware('admin', 'localize')
-            ->prefix(LaravelLocalization::setLocale() . '/admin/page/')
+            ->prefix(LaravelLocalization::setLocale() . '/admin/store/')
             ->name('store.admin.')
             ->namespace($this->moduleNamespace)
             ->group(__DIR__ . '/../Routes/admin.php');
